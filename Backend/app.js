@@ -94,7 +94,6 @@ app.post('/api/register', async (req, res) => {
     res.status(500).json({ error: 'Internal server error' });
   }
 
-  return res.status(201).json({ message: 'User registered successfully' });
 });
 
 
