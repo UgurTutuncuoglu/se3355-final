@@ -1,0 +1,200 @@
+
+<!-- navbar -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark px-3">
+  <a class="navbar-brand imdb-style" href="#">IMDb</a>
+
+  <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarContent">
+
+    <ul class="navbar-nav me-3">
+      <li class="nav-item">
+       <a class="nav-link d-flex align-items-center" href="#">
+      <i class="bi bi-list me-2 fs-5"></i>
+        {{ translations.Menu }}
+
+    </a>
+      </li>
+    </ul>
+
+    <!-- Search bar -->
+    <form class="search-container flex-grow-1 mx-2" role="search" (ngSubmit) = "searchSubmit()">
+      <div class="input-group">
+        <button 
+        class="btn btn-outline-secondary dropdown-toggle bg-light text-dark" 
+        type="button" data-bs-toggle="dropdown"
+         aria-expanded="false"
+        >
+           {{ searchCategoryLabel }}
+        </button>
+        <ul class="dropdown-menu bg-dark " aria-labelledby="dropdownMenuButton">
+            <li><a class="dropdown-item text-white" href="#"  (click) = "selectCategory('All',translations.All)">
+             <i class="bi bi-search me-2"></i>{{ translations.All }}</a>
+            </li>
+
+            <li><a class="dropdown-item text-white" (click) = "selectCategory('Titles',translations.Titles)" href="#">
+             <i class="bi bi-film me-2 "></i>{{ translations.Titles }}</a>
+            </li>
+
+            <li><a class="dropdown-item text-white" href="#">
+             <i class="bi bi-tv me-2"></i>{{ translations.TvEpisodes }}</a>
+            </li>
+            <li><a class="dropdown-item text-white" href="#" (click) = "selectCategory('Celebs',translations.Celebs)">
+              <i class="bi bi-person-fill me-2"></i>{{ translations.Celebs }}</a>
+            </li> 
+
+            <li><a class="dropdown-item text-white" href="#">
+             <i class="bi bi-building me-2"></i>{{ translations.Companies }}</a>
+            </li>
+        </ul>
+        <input 
+           type="search" 
+           class="form-control" 
+           placeholder="Search IMDb"
+           [(ngModel)]="searchText"
+           name="searchInput"
+            (input)="onSearchChange()"
+            aria-label="Search IMDb"
+            autocomplete="off">
+        <button class="btn btn-warning" type="submit">
+             <i class="bi bi-search"></i>
+        </button>
+      </div>
+       <div *ngIf="suggestedMovies.length && searchText.length >= 3" class="autocomplete bg-dark text-white p-3 rounded mt-1 shadow" style="position: absolute; z-index: 999; width: 100%;">
+    <div
+      *ngFor="let movie of suggestedMovies"
+      class="d-flex mb-3 border-bottom pb-2"
+      style="cursor: pointer;"
+      (click)="openMovieDetails(movie)"
+    >
+      <img [src]="movie.image || movie.actorImage" style="width: 70px; height: 100px; object-fit: cover; margin-right: 15px;" />
+      <div>
+        <h6 class="mb-1">{{ movie.title || movie.actorName}}</h6>
+        <small class="text-white">{{ movie.year }}</small>
+        <p class="mb-0" *ngIf="movie.movieTitle; else actorNamesBlock">
+        Film: {{ movie.movieTitle }}
+        </p>
+         <ng-template #actorNamesBlock>
+        <p class="mb-0" *ngIf="movie.actorNames">
+          {{ movie.actorNames }}
+        </p>
+      </ng-template>
+      </div>
+    </div>
+  </div>
+
+</form>
+
+    <!-- Right side nav -->
+    <ul class="navbar-nav ms-auto">
+      <li class="nav-item">
+        <span class="imdb-pro">
+          <span class="imdb">IMDB</span><span class="pro">Pro</span>
+        </span>
+      </li>
+      <li class="nav-item d-flex align-items-center">
+        <a class="nav-link d-flex align-items-center"  routerLink = "/watchlist" href="#">
+            <i class="bi bi-bookmark-plus-fill me-2"></i>
+            {{ translations.Watchlist }}
+        </a>
+      </li>
+      
+      <li class="nav-item dropdown" *ngIf="currentUser; else showLogin">
+        <a class="nav-link dropdown-toggle d-flex align-items-center" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+          <img [src]="currentUser.profilePhoto || 'assets/default-profile.png'" alt="Profile" class="rounded-circle me-2" style="width: 30px; height: 30px; object-fit: cover;">
+          {{currentUser.name}}
+        </a>
+        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
+          <li><a class="dropdown-item" (click)="logout()">{{ translations.Logout }}</a></li>
+        </ul>
+      </li>
+
+      <ng-template #showLogin>
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/login">{{ translations.Login }}</a>
+        </li>
+      </ng-template>
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="langDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                 {{ lang.toUpperCase() }}
+        </a>
+
+        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="langDropdown">
+          <li><a class="dropdown-item" href="#" [class.active]="lang === 'en'" (click)="switchLang('en')">EN</a></li>
+          <li><a class="dropdown-item" href="#" [class.active]="lang === 'tr'" (click)="switchLang('tr')">TR</a></li>
+
+        </ul>
+      </li>
+    </ul>
+
+  </div>
+
+  
+</nav>
+
+
+<!-- body -->
+
+<div class="bg-dark text-white py-3 ">
+  <!-- Header -->
+  <div class="d-flex align-items-center mb-3 px-3">
+    <div style="width: 4px; height: 24px; background-color: #ffc107; margin-right: 10px;"></div>
+    <h5 class="mb-0">{{ translations.Top10 }}</h5>
+  </div>
+
+  <!-- Slider Container -->
+  <div class="movie-slider px-3">
+    <div class="movie-track d-flex gap-3">
+      <div *ngFor="let movie of movies" class="movie-card" style="flex: 0 0 auto; width: 200px;">
+        <div class="card bg-dark text-white position-relative">
+          <i
+            class="bi bi-bookmark-plus position-absolute top-0 start-0 text-white rounded-bottom-end px-2 py-1 fw-bold fs-5"
+            style="cursor: pointer; z-index: 10;"
+            (mouseenter)="hoveredMovieid = movie.id"
+            (mouseleave)="hoveredMovieid = null"
+            (click)="toggleWatchlist(movie)"
+            title="Add to Watchlist"
+            [ngClass]="{
+              'bi': true,
+              'bi-bookmark-plus-fill': hoveredMovieid === movie.id || movie.inWatchlist,
+              'bi-bookmark-plus': hoveredMovieid !== movie.id && !movie.inWatchlist
+            }"
+          ></i>
+          <img
+            [src]="movie.image"
+            class="card-img-top"
+            [alt]="movie.title"
+            style="max-height: 350px; height: 350px; object-fit: cover;"
+          />
+        </div>
+
+        <div class="card-body p-2 mt-2 d-flex flex-column">
+          <div class="d-flex flex-column align-items-start">
+            <h6 class="card-title mb-0">{{ movie.id }}. {{ movie.title }}</h6>
+            <div class="d-flex align-items-center mb-2">
+              <i class="bi bi-star-fill text-warning me-1"></i>
+              <span>{{ movie.imdb_score }}</span>
+              <i class="ms-5 bi bi-star text-primary"></i>
+            </div>
+          </div>
+          <button class="btn btn-primary btn-sm mb-1" 
+          (click)="toggleWatchlist(movie)">
+           {{ movie.inWatchlist ? translations.WatchOptions : translations.AddWatchlist }}
+          </button>
+          <div>
+            <button class="btn btn-outline-secondary btn-sm" 
+            (click)="openTrailer(movie.trailer_url)">
+              <i class="bi bi-camera-video me-1"></i> {{ translations.Trailer }}
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+

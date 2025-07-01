@@ -1,0 +1,31 @@
+<div class="container mt-4">
+  <h4 class="text-warning">TITLES</h4>
+  <div *ngIf="titles.length > 0; else noTitles">
+    <div *ngFor="let m of titles" class="border-bottom py-2 d-flex align-items-start">
+        <img (click) = "goToMovieDetail(m.id)" [src]="m.image" alt="Movie Poster" class="me-2" style="height: 150px;">
+        <div>
+            <h5 class="mb-1">{{ m.title }}</h5>
+            <p class="mb-1 text-muted">{{m.year}}</p>
+            <p class="mb-0">{{ m.actors }}</p>
+            
+        </div>
+    </div>
+  </div>
+  <ng-template #noTitles>
+    <p class="text-muted">No titles found.</p>
+  </ng-template>
+
+  <h4 class="text-warning mt-5">PEOPLE</h4>
+  <div *ngIf="people.length > 0; else noPeople">
+    <div *ngFor="let p of people" class="d-flex align-items-center border-bottom py-2">
+      <img  [src]="p.image" alt="Person" class="me-3" style="width: 100px; height: 100px; object-fit: cover; border-radius: 50%;">
+      <div>
+        <h6 class="mb-0">{{ p.name }}</h6>
+        <small class="text-muted">{{ p.aka }}</small>
+      </div>
+    </div>
+  </div>
+  <ng-template #noPeople>
+    <p class="text-muted">No people found.</p>
+  </ng-template>
+</div>

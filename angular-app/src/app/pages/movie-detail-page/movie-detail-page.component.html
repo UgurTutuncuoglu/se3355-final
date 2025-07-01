@@ -1,0 +1,158 @@
+<div class="movie-detail-container text-white">
+  <nav class="navbar navbar-expand-lg navbar-dark bg-transparent px-3">
+    <!-- Toggler button for small screens -->
+    <button
+      class="navbar-toggler"
+      type="button"
+      data-bs-toggle="collapse"
+      data-bs-target="#navbarContent"
+      aria-controls="navbarContent"
+      aria-expanded="false"
+      aria-label="Toggle navigation"
+    >
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarContent">
+      <ul class="navbar-item-list ms-auto d-flex flex-column flex-lg-row list-unstyled mb-0">
+        <li class="navbar-item px-2 py-1">Cast & crew</li>
+        <li class="navbar-item px-2 py-1">User reviews</li>
+        <li class="navbar-item px-2 py-1">Trivia</li>
+        <li class="navbar-item px-2 py-1">FAQ</li>
+        <li class="navbar-item px-2 py-1">IMDbPro</li>
+        <li class="navbar-item px-2 py-1">
+          <i class="bi bi-columns-gap"></i> All topics
+        </li>
+      </ul>
+    </div>
+  </nav>
+
+  <div *ngIf="movie" class="container-fluid px-3">
+    <!-- Title and Ratings -->
+    <div class="row align-items-center mb-3">
+      <div class="col-md-6 text-start">
+        <div class="fs-1 fw-bold mb-1">{{ movie.title }}</div>
+        <div>{{ movie.year }}</div>
+      </div>
+
+      <div class="col-md-6 d-flex flex-wrap justify-content-md-end justify-content-start gap-4 mt-3 mt-md-0 text-white">
+        <!-- IMDb Rating -->
+        <div class="text-md-end text-start">
+          <div class="fw-bold text-uppercase small text-muted">IMDb RATING</div>
+          <div class="mt-2 d-flex align-items-center">
+            <i class="bi bi-star-fill text-warning fs-5 me-2"></i>
+            <span class="fs-5 fw-semibold">{{ movie.imdb_score }}/10</span>
+          </div>
+          <div class="small mt-1">{{ movie.rates }}</div>
+        </div>
+
+        <!-- Your Rating -->
+        <div class="text-md-end text-start">
+          <div class="fw-bold text-uppercase small text-muted">YOUR RATING</div>
+          <div class="mt-2 d-flex align-items-center">
+            <i class="bi bi-star fs-5 me-2 text-primary"></i>
+            <span class="text-primary fs-4 fw-bold">RATE</span>
+          </div>
+        </div>
+
+        <!-- Popularity -->
+        <div class="text-md-end text-start">
+          <div class="fw-bold text-uppercase small text-muted">POPULARITY</div>
+          <div class="d-flex align-items-center">
+            <ng-container [ngSwitch]="movie.popularity">
+              <i *ngSwitchCase="'yes'" class="bi bi-arrow-up-square text-success fs-3 me-2"></i>
+              <i *ngSwitchCase="''" class="bi bi-arrows text-warning fs-3 me-2"></i>
+              <i *ngSwitchCase="'no'" class="bi bi-arrow-down-square text-danger fs-3 me-2"></i>
+            </ng-container>
+            <div class="fs-5 fw-semibold">{{ movie.popularity_number }}</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Movie Content Area -->
+    <div class="row gy-3">
+      <!-- Poster -->
+      <!-- Poster -->
+<div class="col-lg-3 col-md-5 col-12 position-relative d-flex align-items-center poster-wrapper">
+  <div class="w-100 h-100 position-relative d-flex align-items-center justify-content-center">
+    <i
+      class="bi bi-bookmark-plus position-absolute top-0 start-0 text-white rounded-bottom-end ps-3 fw-bold fs-5"
+      style="cursor: pointer; z-index: 10;"
+      (mouseenter)="hoveredMovieid = movie.id"
+      (mouseleave)="hoveredMovieid = null"
+      (click)="toggleWatchlist(movie)"
+      title="Add to Watchlist"
+      [ngClass]="{
+        'bi': true,
+        'bi-bookmark-plus-fill': hoveredMovieid === movie.id || movie.inWatchlist,
+        'bi-bookmark-plus': hoveredMovieid !== movie.id && !movie.inWatchlist
+      }"
+    ></i>
+    <img
+      [src]="movie.image"
+      [alt]="movie.title"
+      class="img-fluid rounded"
+      style="max-height: 100%; object-fit: cover;"
+    />
+  </div>
+</div>
+
+      <!-- Trailer -->
+      <div class="col-lg-6 col-md-7 col-12 position-relative">
+        <i class="bi bi-three-dots-vertical position-absolute top-0 end-0 text-white px-3 pt-2 fs-4" style="cursor: pointer; z-index: 10;"></i>
+        <div class="ratio ratio-16x9 rounded overflow-hidden " *ngIf="sanitizedTrailerUrl">
+          <iframe
+            [src]="sanitizedTrailerUrl"
+            
+            allowfullscreen
+            class="w-100 h-100"
+          ></iframe>
+        </div>
+      </div>
+
+      <!-- Side Buttons -->
+      <div class="col-lg-3 col-md-12 col-12 d-flex flex-md-row flex-lg-column flex-wrap gap-2">
+        <div class="flex-fill d-flex flex-column justify-content-center align-items-center text-white border rounded p-3 w-100">
+          <i class="bi bi-play-btn fs-1"></i>
+          <div class="mt-1">Videos</div>
+        </div>
+
+        <div class="flex-fill d-flex flex-column justify-content-center align-items-center text-white border rounded p-3 w-100">
+          <i class="bi bi-images fs-1"></i>
+          <div class="mt-1">Photos</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- <div class="container">
+    <div class="fs-1 fw-bold  mb-2">
+       {{movie.title}} 
+    </div>
+    <div class="row text-white">
+    <div class="col">
+        <div class="fw-bold text-uppercase small text-muted">
+        IMDb RATING
+        </div>
+        <div class="mt-2 d-flex align-items-center">
+        <i class="bi bi-star-fill text-warning fs-5 me-2"></i>
+        <span class="fs-5 fw-semibold">{{ movie.imdbScore }}/10</span>
+        </div>
+    </div>
+
+  
+    <div class="col text-center">
+        <div class="fw-bold text-uppercase small text-muted">
+        YOUR RATING
+        </div>
+        <div class="mt-2 d-flex justify-content-center align-items-center">
+            <i class="bi bi-star ms-4 fs-5 me-2  text-primary"></i>
+            <span class="text-primary fs-4 fw-bold">RATE</span>
+        </div>
+    </div>
+  
+</div> -->

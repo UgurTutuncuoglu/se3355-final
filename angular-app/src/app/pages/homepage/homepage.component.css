@@ -1,0 +1,88 @@
+.movie-container {
+  background-color: black;
+  border-radius: 8px;
+  padding: 15px;
+}
+
+
+.movie-list,html,body{
+    height: 100%;
+    margin: 0;
+}
+.carousel-control-prev span,
+.carousel-control-next span {
+  pointer-events: auto;
+}
+
+.carousel-control-prev,
+.carousel-control-next {
+  pointer-events: none; 
+}
+
+.imdb-style {
+  background-color: #f5c518; 
+  color: #000; 
+  padding: 2px 6px;
+  border-radius: 3px;
+  font-weight: bold;
+  font-size: 1.25rem;
+  text-decoration: none;
+}
+
+.dropdown-menu .dropdown-item:hover {
+  background-color: #343a40; 
+  color: white;
+}
+
+html,body {
+  height: 100%;
+}
+
+.movie-card-container {
+  padding: 0 8px;
+  flex: 0 0 auto;
+  width: 100%;
+}
+
+.movie-slider {
+  overflow-x: auto;
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
+}
+
+.movie-slider::-webkit-scrollbar {
+  height: 8px;
+}
+
+.movie-slider::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 4px;
+}
+
+.movie-slider::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.movie-track {
+  display: flex;
+  flex-wrap: nowrap;
+}
+
+.imdb-pro {
+  font-weight: bold;
+  font-size: 24px;
+  font-family: Arial, sans-serif;
+}
+
+.imdb {
+  color: white;
+}
+
+.pro {
+  color: #0072ce; 
+}
+
+.search-container {
+  position: relative;
+}
+

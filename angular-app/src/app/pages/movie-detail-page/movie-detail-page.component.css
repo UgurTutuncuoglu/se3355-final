@@ -1,0 +1,104 @@
+.movie-detail-container {
+  background: rgba(0, 0, 0, 0.3);
+  padding: 20px;
+  color: white;
+  backdrop-filter: blur(4px);
+}
+
+.navbar-item-list li {
+  cursor: pointer;
+  transition: color 0.2s;
+}
+.navbar-item-list li:hover {
+  color: #ffc107; /* Hover color */
+}
+
+/* Container Adjustments */
+.movie-detail-content img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.6);
+}
+
+/* Bookmark styling */
+.movie-detail-content .bi-bookmark-plus,
+.movie-detail-content .bi-bookmark-plus-fill {
+  padding: 8px;
+  background-color: rgba(0, 0, 0, 0.4);
+  border-bottom-right-radius: 8px;
+  transition: all 0.2s ease-in-out;
+}
+
+/* Video iframe */
+.movie-detail-container iframe {
+  width: 100%;
+  height: 100%;
+  border-radius: 8px;
+  object-fit: cover;
+}
+
+/* Side cards (Videos, Photos) */
+.side-card {
+  height: 175px;
+  border-radius: 8px;
+  background-color: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  text-align: center;
+  padding: 20px 10px;
+  transition: background 0.2s;
+}
+.side-card:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+/* Responsive overrides */
+@media (max-width: 992px) {
+  .movie-detail-container .row {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .movie-detail-content,
+  .movie-detail-container iframe,
+  .side-card {
+    width: 100% !important;
+    margin-bottom: 20px;
+  }
+
+  .movie-detail-container .col-auto.d-flex {
+    flex-direction: column;
+    gap: 20px;
+    align-items: flex-start;
+  }
+
+  .navbar-item-list {
+    text-align: center;
+  }
+}
+
+@media (max-width: 576px) {
+  .fs-1 {
+    font-size: 1.8rem !important;
+  }
+
+  .fs-5 {
+    font-size: 1rem !important;
+  }
+
+  .fs-4 {
+    font-size: 1.2rem !important;
+  }
+
+  .side-card i {
+    font-size: 2rem;
+  }
+}
+
+/* Match poster to trailer height */
+.ratio-16x9 {
+  height: 350px; 
+}
+
+

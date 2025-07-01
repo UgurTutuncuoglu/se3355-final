@@ -1,0 +1,127 @@
+
+
+<div class="container mt-5">
+  <div class="row justify-content-center">
+    
+    <!-- Google Login Button -->
+    <div class="col-12 mb-4 text-center">
+      <button id = "googleBtn"  (click)="loginWithGoogle()">
+        <i class="bi bi-google me-2"></i> GOOGLE ile Giriş Yap
+      </button>
+    </div>
+
+    <!-- Login Form -->
+    <div class="col-md-5 border p-4 rounded me-3">
+      <h4>Giriş Yap</h4>
+      <form (ngSubmit)="login()" #loginForm="ngForm">
+        <div class="mb-3">
+          <label for="loginEmail" class="form-label">Kullanıcı Email:</label>
+          <input type="email" id="loginEmail" class="form-control" name="loginEmail" [(ngModel)]="loginEmail" required email>
+        </div>
+        <div class="mb-3">
+          <label for="loginPassword" class="form-label">Şifre:</label>
+          <input type="password" id="loginPassword" class="form-control" name="loginPassword" [(ngModel)]="loginPassword" required minlength="8">
+        </div>
+        <button type="submit" class="btn btn-primary" [disabled]="!loginForm.valid">GİRİŞ</button>
+      </form>
+    </div>
+
+    <!-- Registration Form -->
+    <div class="col-md-6 border p-4 rounded">
+      <h4>Üye Ol</h4>
+      <form (ngSubmit)="register()" #registerForm="ngForm" enctype="multipart/form-data">
+
+        <div class="row">
+          <div class="col mb-3">
+            <label for="firstName" class="form-label">Ad:</label>
+            <input type="text" id="firstName" class="form-control" name="firstName" [(ngModel)]="firstName" required #firstNameField="ngModel">
+            <div class="text-danger" *ngIf="firstNameField.invalid && firstNameField.touched">Ad gerekli.</div>
+          </div>
+          <div class="col mb-3">
+            <label for="lastName" class="form-label">Soyad:</label>
+            <input type="text" id="lastName" class="form-control" name="lastName" [(ngModel)]="lastName" required #lastNameField="ngModel">
+            <div class="text-danger" *ngIf="lastNameField.invalid && lastNameField.touched">Soyad gerekli.</div> 
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label for="registerEmail" class="form-label">Kullanıcı Email:</label>
+          <input type="email" id="registerEmail" class="form-control" name="registerEmail" [(ngModel)]="registerEmail" required email #registerEmailField="ngModel">
+          <div class="text-danger" *ngIf="registerEmailField.invalid && registerEmailField.touched">
+            <div *ngIf="registerEmailField.errors?.['required']">Email gerekli.</div>
+            <div *ngIf="registerEmailField.errors?.['email']">Geçerli bir email giriniz.</div>
+          </div> 
+        </div>
+
+        <div class="row mb-3">
+          <div class="col">
+            <label for="registerPassword" class="form-label">Şifre:</label>
+            <input type="password" id="registerPassword" class="form-control" name="registerPassword" [(ngModel)]="registerPassword" required minlength="8" pattern="^(?=.*[0-9])(?=.*[^A-Za-z0-9]).{8,}$" 
+                   title="En az 8 karakter, 1 sayı ve 1 özel karakter içermelidir"
+                    #registerPasswordField="ngModel">
+            <div class="text-danger" *ngIf="registerPasswordField.invalid && registerPasswordField.touched">
+              <div *ngIf="registerPasswordField.errors?.['required']">Şifre gerekli.</div>
+              <div *ngIf="registerPasswordField.errors?.['minlength']">Şifre en az 8 karakter olmalı.</div>
+              <div *ngIf="registerPasswordField.errors?.['pattern']">Şifre 1 sayı ve 1 özel karakter içermeli.</div>
+            </div>        
+          </div>
+          <div class="col">
+            <label for="confirmPassword" class="form-label">Şifre Tekrar:</label>
+            <input type="password" id="confirmPassword" class="form-control" name="confirmPassword" [(ngModel)]="confirmPassword" required #confirmPasswordField="ngModel">
+            <div class="text-danger" *ngIf="confirmPasswordField.invalid && confirmPasswordField.touched">
+              Şifre tekrar gerekli.
+            </div>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <div class="col">
+            <label for="country" class="form-label">Ülke:</label>
+            <select id="country" class="form-select" name="country" [(ngModel)]="country" required (change)="onCountryChange($event)" #countryField="ngModel">
+              <option value="" disabled selected>Seçiniz</option>
+              <option *ngFor="let c of countries" [value]="c">{{ c }}</option>
+            </select>
+            <div class="text-danger" *ngIf="countryField.invalid && countryField.touched">Ülke seçimi zorunlu.</div>
+          </div>
+          <div class="col">
+            <label for="city" class="form-label">Şehir:</label>
+            <select id="city" class="form-select" name="city" [(ngModel)]="city" required #cityField="ngModel">
+              <option value="" disabled selected>Seçiniz</option>
+              <option *ngFor="let city of cities" [value]="city">{{ city }}</option>
+            </select>
+            <div class="text-danger" *ngIf="cityField.invalid && cityField.touched">Şehir seçimi zorunlu.</div>
+          </div>
+        </div>
+        <div class="text-center mb-4">
+          <img 
+            [src]="userPhotoUrl || 'assets/default-user.png'"
+            width="100" 
+            height="100"
+            style="border-radius: 50%; object-fit: cover; width: 100px; height: 100px; display: block;"
+
+            alt="User Photo">
+        </div>
+
+        <div class="mb-3">
+          <label for="photo" class="form-label">Profil Fotoğrafı (Opsiyonel):</label>
+          <input type="file" id="photo" class="form-control" (change)="onFileSelected($event)" accept="image/*">
+        </div>
+        
+        <button 
+        type="submit" 
+        class="btn btn-success" 
+        [disabled]="!registerForm.valid || !passwordsMatch()"
+        >Üye Ol</button>
+
+      </form>
+
+      
+    </div>
+
+  </div>
+
+  
+</div>
+
+
+

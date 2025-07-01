@@ -1,0 +1,74 @@
+<div class="container my-4 text-white">
+  <div class="d-flex justify-content-between align-items-center mb-3">
+    <h2 class="mb-0">Your Watchlist</h2>
+    <button (click)="goBack()" class="btn btn-outline-light">
+      <i class="bi bi-arrow-left"></i> Go Back
+    </button>
+  </div>
+
+  <div *ngIf="watchlist.length === 0" class="alert alert-warning">
+    No films in your watchlist.
+  </div>
+
+  <div class="row g-4">
+    <div *ngFor="let movie of watchlist" class="col-12 col-md-6 col-lg-4">
+      <div class="card h-100 bg-dark text-white border-secondary shadow">
+        <img
+          [src]="movie.image"
+          [alt]="movie.title"
+          class="card-img-top"
+          style="height: 300px; object-fit: cover;"
+        />
+        <div class="card-body d-flex flex-column">
+          <h5 class="card-title">{{ movie.title }}</h5>
+          <p class="card-text mb-2">
+            <span class="text-warning">IMDb:</span> {{ movie.imdb_score }} <br />
+            <span class="text-white">Year:</span> {{ movie.year }}
+          </p>
+
+          <!-- Rating -->
+          <div class="mb-3">
+            <label class="form-label fw-bold">Your Rating:</label>
+            <div>
+              <ng-container *ngFor="let star of [1,2,3,4,5]">
+                <i
+                  class="fa"
+                  [class.fa-star]="getUserRating(movie) >= star"
+                  [class.fa-star-o]="getUserRating(movie) < star"
+                  (click)="rateMovie(movie, currentUserId, star)"
+                  style="cursor: pointer; color: gold;"
+                ></i>
+              </ng-container>
+              <span *ngIf="getUserRating(movie)">({{ getUserRating(movie) }} stars)</span>
+            </div>
+          </div>
+
+          <!-- Comments -->
+          <div *ngIf="movie.comments?.length > 0" class="mb-2">
+            <h6>Comments:</h6>
+            <ul class="list-group list-group-flush">
+              <li *ngFor="let comment of movie.comments" class="list-group-item bg-dark text-white px-0 py-1 border-0">
+                <strong>{{ comment.user }}:</strong>
+                {{ comment.comment.length > 100 ? (comment.comment | slice: 0:100) + '...' : comment.comment }}
+              </li>
+            </ul>
+          </div>
+
+          <!-- New Comment -->
+          <div class="mt-auto">
+            <textarea
+              [(ngModel)]="newComments[movie.id]"
+              rows="2"
+              class="form-control form-control-sm mb-2"
+              placeholder="Leave a comment..."
+            ></textarea>
+            <button
+              (click)="submitComment(movie)"
+              class="btn btn-sm btn-success w-100"
+            >Submit Comment</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
