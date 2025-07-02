@@ -10,7 +10,7 @@ import { Route, Router } from "@angular/router";
 })
 
 export class AuthService{
-   private apiUrl = "https://se3355-final.vercel.app/";
+   private apiUrl = "https://se3355-final.vercel.app";
 //    private currentUser: User|null = null;
    private currentUserSubject: BehaviorSubject<User | null>;
    public currentUser$: Observable<User | null>; 
