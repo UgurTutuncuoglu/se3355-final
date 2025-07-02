@@ -32,13 +32,14 @@ This project consists of a **frontend** built with **Angular** and a **backend**
 - Users can **register**, **log in**, **view movies**, **rate**,  **comment** and **logout**.
 - The frontend communicates with the backend via RESTful API endpoints.
 - All components are responsive and follow a clean UI approach.
+- Postgresql (NEON) in vercel was used.
 
 ---
 
 ## 🧠 Assumptions
 
-- Postgresql (NEON) in vercel was used.
-- Basic authentication using simple POST request with token.
+
+- Authentication using simple POST request with token.
 - Each user can post multiple rating and multiple comments per movie.
 
 ---
@@ -49,7 +50,7 @@ This project consists of a **frontend** built with **Angular** and a **backend**
 ```
 {
   "id": "number",
-  "username": "string",
+  "name": "string",
   "surname": "string",
   "email" : "string",
   "password": "string",
@@ -63,10 +64,10 @@ This project consists of a **frontend** built with **Angular** and a **backend**
 ```
 
 {
-  "id": "string",
+  "id": "number",
   "title": "string",
   "image": "string",
-  "imdb_score": "string",
+  "imdb_score": "number",
   "rates": "string",
   "year": "number",
   "popularity": "string",
