@@ -1,5 +1,8 @@
 # 🎬 SE3355 Final Project – Movie Review Portal
 
+**👨‍💻 Developed by:** Uğur Tütüncüoğlu  
+**📘 Student ID:** 20070006012
+
 ## 📌 Live Demo
 
 - 🔗 **Frontend (Angular App)**:  
